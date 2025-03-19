@@ -1,0 +1,41 @@
+
+.background{
+    background-color: white;
+    display:flex;
+    min-width: 60vw;
+    min-height: 5vh;
+    padding: 4px;
+    margin:4px;
+}
+
+.songimg {
+    max-height: 120px;
+    max-width: 120px;
+}
+
+.column{
+    flex:1;
+    margin:0;
+    padding:0;
+}
+
+.playbutton{
+    background-color: lightgreen;
+    border-left: 5%;
+    border-right: 5%;
+}
+
+.button{
+    background-color: dimgray;
+    height: 25px;
+    width: 70px;
+    border-radius: 20%;
+}
+
+.deletebutton{
+    background-color: red;
+    border-radius: 20%;
+    height: 25px;
+    width: 70px;
+}
+
