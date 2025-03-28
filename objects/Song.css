@@ -1,12 +1,27 @@
+.most-liked {
+    background-color: #d4edda !important; /* Light green */
+    border: 2px solid #28a745;
+}
+
+.average-liked {
+    background-color: #fff3cd !important; /* Light yellow */
+    border: 2px solid #ffc107;
+}
+
+.least-liked {
+    background-color: #f8d7da !important; /* Light red */
+    border: 2px solid #dc3545;
+}
+
 
 .background{
-    background-color: white;
     display:flex;
     min-width: 60vw;
     min-height: 5vh;
     padding: 4px;
     margin:4px;
 }
+
 
 .songimg {
     max-height: 120px;

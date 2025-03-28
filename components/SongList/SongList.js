@@ -9,7 +9,11 @@ function SongList() {
     const [songs, setSongs] = useState([
         { id: 1, image: "https://i.scdn.co/image/ab67616d0000b2731e0dc5baaabda304b0ad1815", name: "Island in the Sun", artist: "Weezer", genre: "Rock", listens: 0, likes: 0 },
         { id: 2, image: "https://i1.sndcdn.com/artworks-Mndt2nr2zGNU-0-t500x500.jpg", name: "Passenger", artist: "Deftones", genre: "Metal", listens: 0, likes: 0 },
-        { id: 3, image: "https://upload.wikimedia.org/wikipedia/en/6/6b/DontFearTheReaper.jpg", name: "Don't Fear the Reaper", artist: "Blue Oyster Cult", genre: "Rock", listens: 0, likes: 0 }
+        { id: 3, image: "https://upload.wikimedia.org/wikipedia/en/6/6b/DontFearTheReaper.jpg", name: "Don't Fear the Reaper", artist: "Blue Oyster Cult", genre: "Rock", listens: 0, likes: 0 },
+        { id: 4, image: "https://i.scdn.co/image/ab67616d0000b2731f829ea9c2c7ffcec1a3c857", name:"Bleed the Freak", artist: "Alice in Chains", genre:"Rock", listens: 0, likes: 0},
+        { id: 5, image: "https://i.scdn.co/image/ab67616d0000b2731f829ea9c2c7ffcec1a3c857", name:"Man in the Box", artist:"Alice in Chains", genre:"Rock", listens: 0, likes: 0},
+        { id: 6, image: "https://i.scdn.co/image/ab67616d0000b2730389027010b78a5e7dce426b", name:"Everlong", artist:"Foo Fighters", genre:"Rock", listens:0,likes:0 }
+    
     ]);
 
     const getNextId = () => {
@@ -59,6 +63,8 @@ function SongList() {
     const [selectedGenre, setSelectedGenre] = useState("");
     const [selectedArtist, setSelectedArtist] = useState("");
 
+
+
     const filteredSongs = songs.filter((song) => {
         const matchesGenre = selectedGenre ? song.genre === selectedGenre : true;
         const matchesArtist = selectedArtist ? song.artist === selectedArtist : true;
@@ -68,11 +74,34 @@ function SongList() {
 
     const sortedSongs = filteredSongs.sort((songa, songb) => songb.listens - songa.listens);
 
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const songsPerPage = 5;
+
+    const indexOfLastSong = currentPage * songsPerPage;
+    const indexOfFirstSong = indexOfLastSong - songsPerPage;
+    const paginatedSongs = sortedSongs.slice(indexOfFirstSong, indexOfLastSong);
+    const totalPages = Math.ceil(sortedSongs.length / songsPerPage);
+
+
+    const handlePreviousPage = () => {
+        setCurrentPage(prev => Math.max(1, prev - 1));
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prev => Math.min(totalPages, prev + 1));
+    };
+
+    // useEffect(() => {
+    //     setCurrentPage(1);
+    // }, [searchQuery, selectedGenre, selectedArtist]);
+
     return (
-        <div class="songlist">
+        <div className="songlist">
 
             <input
-                class="searchbar"
+                className="searchbar"
                 type="text"
                 placeholder="Song Name..."
                 onChange={(query) => setSearchQuery(query.target.value)}
@@ -132,19 +161,42 @@ function SongList() {
                 </MessageBox>
             )}
 
-            {sortedSongs.length > 0 ? (
-                sortedSongs.map((song) => (<Song
+{sortedSongs.length > 0 ? (
+    <>
+        {paginatedSongs.map((song) => {
+
+            const maxLikes = Math.max(...sortedSongs.map(s => s.likes));
+            const minLikes = Math.min(...sortedSongs.map(s => s.likes));
+            
+            let bgClass = '';
+            if (song.likes === maxLikes) {
+                bgClass = 'most-liked';
+            } else if (song.likes === minLikes) {
+                bgClass = 'least-liked';
+            } else {
+                bgClass = 'average-liked';
+            }
+
+            return (
+                <Song
                     key={song.id}
                     songData={song}
+                    className={bgClass}
                     onEdit={() => setEditingSong(song)}
                     onDelete={() => handleDeleteSong(song.id)}
                     onIncrementListens={() => handleIncrementListens(song.id)}
                     onIncrementLikes={() => handleIncrementLikes(song.id)}
-                />))
-            )
-                :
-                <p>No songs</p>
-            }
+                />
+            );
+        })}
+        
+        <div className="pagination-controls">
+            {/* pagination buttons */}
+        </div>
+    </>
+) : (
+    <p>No songs</p>
+)}
         </div>
     );
 }
