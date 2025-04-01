@@ -191,7 +191,25 @@ function SongList() {
         })}
         
         <div className="pagination-controls">
-            {/* pagination buttons */}
+        <button 
+                            onClick={handlePreviousPage}
+                            disabled={currentPage === 1}
+                            className="page-button"
+                        >
+                            Previous
+                        </button>
+                        
+                        <span className="page-info">
+                            Page {currentPage} of {totalPages}
+                        </span>
+                        
+                        <button 
+                            onClick={handleNextPage}
+                            disabled={currentPage === totalPages}
+                            className="page-button"
+                        >
+                            Next
+                        </button>
         </div>
     </>
 ) : (
