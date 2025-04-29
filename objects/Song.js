@@ -9,7 +9,9 @@ function Song({songData, onEdit, onDelete, onIncrementListens, onIncrementLikes,
             <button onClick={onIncrementListens} className="playbutton">Listen</button>
             <button onClick={onIncrementLikes} className="playbutton">Like</button>
 
-            <img src={songData.image} alt={songData.name} className="songimg"></img>
+            <a href={`http://localhost:8080/files/download/starspangledbannerguitar.mp4`} download>
+                <img src={songData.image} alt={songData.name} className="songimg"></img>
+            </a>
 
             <div className="column">
                 <h2> {songData.name} </h2>

@@ -20,6 +20,7 @@ function SongList() {
     const [queuedOperations, setQueuedOperations] = useState([]);
     const songsPerPage = 5;
     const [isLoading, setIsLoading] = useState(false);
+    const [file, setFile] = useState(null);
 
     // Load initial state from localStorage
     useEffect(() => {
@@ -334,6 +335,18 @@ function SongList() {
         }
     };
 
+    const handleUpload = async () => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const res = await fetch("http://localhost:8080/files/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        alert(await res.text());
+    };
+
     return (
         <div className="songlist">
             {!isOnline && (
@@ -349,6 +362,11 @@ function SongList() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 value={searchQuery}
             />
+            
+            <div>
+                <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+                <button onClick={handleUpload}>Upload</button>
+            </div>
 
             <div className="filter-container">
                 <button className="filter-button" onClick={() => setSelectedGenre("")}>
