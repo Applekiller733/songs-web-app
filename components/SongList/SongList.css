@@ -87,6 +87,14 @@
     padding: 10px;
 }
 
+.offline-message {
+    background-color: #ffcccb;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
 .pagination-controls button {
     padding: 8px 16px;
     border: none;
